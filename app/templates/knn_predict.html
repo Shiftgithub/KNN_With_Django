@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>KNN Prediction with PairPlot</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-4">KNN Prediction with PairPlot</h1>
+        
+        <form method="post" action="{% url 'knn_predict' %}" class="mb-4">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="age">Enter Age:</label>
+                <input type="number" class="form-control" name="age" id="age" required>
+            </div>
+
+            <div class="form-group">
+                <label for="gender">Enter Gender:</label>
+                <input type="text" class="form-control" name="gender" id="gender" required>
+            </div>
+
+            <div class="form-group">
+                <label for="bp">Enter BP:</label>
+                <input type="text" class="form-control" name="bp" id="bp" required>
+            </div>
+
+            <div class="form-group">
+                <label for="chol">Enter Cholesterol:</label>
+                <input type="text" class="form-control" name="chol" id="chol" required>
+            </div>
+
+            <div class="form-group">
+                <label for="na_to_k">Enter Sodium to Potassium:</label>
+                <input type="number" class="form-control" name="na_to_k" id="na_to_k" step="any" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Predict</button>
+        </form>
+
+        {% if custom_input %}
+            <h2 class="my-4">Predicted Class: {{ predicted_class }}</h2>
+            <p>Custom Input:</p>
+            <ul>
+                {% for key, value in custom_input.items %}
+                    <li>{{ key }}: {{ value }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% if plot_data %}
+            <h2 class="my-4">PairPlot with K-Nearest Neighbors (KNN) Predictions</h2>
+            <img src="data:image/png;base64,{{ plot_data }}" alt="PairPlot" class="img-fluid">
+        {% endif %}
+    </div>
+
+    <!-- Include Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
